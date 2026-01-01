@@ -8,7 +8,6 @@ const db = new PrismaClient({ adapter: adapter });
 const main = async () => {
   console.log('🌱 Starting seed...');
   console.log('Database URL:', process.env.DATABASE_URL ? 'Connected' : 'Missing');
-
   try {
     // Test database connection
     await db.$connect();
@@ -59,7 +58,7 @@ const main = async () => {
       Array.from({ length: 15 }).map(async () => {
         const randomUser = users[Math.floor(Math.random() * users.length)];
         const randomProducts = faker.helpers.arrayElements(products, { min: 1, max: 3 });
-        
+
         const created = await db.order.create({
           data: {
             total: faker.number.float({ min: 20, max: 500, fractionDigits: 2 }),
@@ -79,7 +78,7 @@ const main = async () => {
     const userCount = await db.user.count();
     const productCount = await db.product.count();
     const orderCount = await db.order.count();
-    
+
     console.log(`✅ Final counts: ${userCount} users, ${productCount} products, ${orderCount} orders`);
     console.log('✅ Seed completed successfully!');
   } catch (error) {
